@@ -7,10 +7,15 @@ public class WASDcontroller : MonoBehaviour
     public float jumpForce = 200f;
     public bool jumped = false;
     public bool grounded = false;
+    public int destroyedCount = 0;
+    public GameObject myPlayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+       myRB = GetComponent<Rigidbody2D>();
+        grounded = false;
+        destroyedCount = 0;
+
     }
 
     // Update is called once per frame
@@ -52,6 +57,16 @@ public class WASDcontroller : MonoBehaviour
         }
 
     }
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Destructible")
+        {
+            Destroy(other.gameObject);
+            destroyedCount += 1;
+        }
+    }
+
+
     void OnCollisionStay2D(Collision2D collision)
     {
         grounded = true;
