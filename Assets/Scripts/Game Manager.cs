@@ -1,14 +1,17 @@
 using TMPro;
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class gameManager : MonoBehaviour
 {
     public float timer;
     public float gameTimeLimit = 30f;
     public float timeLeft;
-    public TextMeshProUGUI timerText;
     public GameObject myPlayer;
+    public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameOver;
+    
+    
 
     WASDcontroller playerScript;
    
@@ -17,6 +20,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         myPlayer = GameObject.FindWithTag("Player");
         playerScript = myPlayer.GetComponent<WASDcontroller>();
+        myPlayer.SetActive(true);
+        gameOver.enabled = false;
+        
     }
 
     // Update is called once per frame
@@ -27,16 +33,25 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
         if (timeLeft <= 0)
         {
-            Destroy(myPlayer);
-            Debug.Log("Game Over");
+            EndGame();
         }
         timerText.text = timeLeft.ToString();
 
         int dScore = playerScript.destroyedCount;
         scoreText.text = dScore.ToString();
+
+      
+
     }
     void FixedUpdate()
     {
         float delta = Time.fixedDeltaTime;
+    }
+
+    public void EndGame()
+    {
+        Destroy(myPlayer);
+        Debug.Log("Game Over");
+        gameOver.enabled = true;
     }
 }

@@ -9,12 +9,15 @@ public class WASDcontroller : MonoBehaviour
     public bool grounded = false;
     public int destroyedCount = 0;
     public GameObject myPlayer;
+    public gameManager myManager;
+   
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
        myRB = GetComponent<Rigidbody2D>();
         grounded = false;
         destroyedCount = 0;
+       
 
     }
 
@@ -64,8 +67,16 @@ public class WASDcontroller : MonoBehaviour
             Destroy(other.gameObject);
             destroyedCount += 1;
         }
-    }
 
+        if(other.gameObject.tag == "winPad")
+        {
+           if (destroyedCount == 3)
+            {
+                myManager.EndGame();
+
+            }
+        }
+    }
 
     void OnCollisionStay2D(Collision2D collision)
     {

@@ -1,8 +1,13 @@
+using TMPro;
 using UnityEngine;
 
 public class SPIKES : MonoBehaviour
 {
     public GameObject myPlayer;
+    public AudioClip myClip;
+    public gameManager myManager;
+    public int destroyedMyPlayerCount = 0;
+  
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,9 +25,16 @@ public class SPIKES : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike")
         {
-            Destroy(myPlayer);
+            
+            destroyedMyPlayerCount += 1;
+
+            if (destroyedMyPlayerCount == 3)
+            {
+                myManager.EndGame();
+            }
             
         }
+        
     }
 
 }
