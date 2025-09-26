@@ -33,6 +33,7 @@ public class gameManager : MonoBehaviour
 
         if (timeLeft <= 0)
         {
+            timerText.enabled = false;
             EndGame();
         }
         timerText.text = timeLeft.ToString();

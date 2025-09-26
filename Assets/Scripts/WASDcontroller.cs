@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class WASDcontroller : MonoBehaviour
@@ -10,7 +11,8 @@ public class WASDcontroller : MonoBehaviour
     public int destroyedCount = 0;
     public GameObject myPlayer;
     public gameManager myManager;
-   
+    public int destroyedMyPlayerCount = 0;
+    public TextMeshProUGUI timerText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -62,6 +64,18 @@ public class WASDcontroller : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.tag == "Spike")
+        {
+
+            destroyedMyPlayerCount += 1;
+
+            if (destroyedMyPlayerCount == 3)
+            {
+                timerText.enabled = false;
+                myManager.EndGame();
+            }
+
+        }
         if (other.gameObject.tag == "Destructible")
         {
             Destroy(other.gameObject);
@@ -72,6 +86,7 @@ public class WASDcontroller : MonoBehaviour
         {
            if (destroyedCount == 3)
             {
+                timerText.enabled = false;
                 myManager.EndGame();
 
             }
